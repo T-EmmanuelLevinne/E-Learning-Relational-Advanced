@@ -1,0 +1,15 @@
+{
+  "name": "clinic-bcnf-dbms",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Clinic Database Management System applying Boyce-Codd Normal Form (BCNF) with React, TypeScript, Node.js, and Supabase",
+  "scripts": {
+    "dev": "concurrently -n SERVER,CLIENT -c cyan,magenta \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "build": "npm --prefix server run build && npm --prefix client run build",
+    "typecheck": "npm --prefix server run typecheck && npm --prefix client run typecheck",
+    "test": "npm --prefix server test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
