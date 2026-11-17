@@ -1,6 +1,6 @@
 # E-Learning Website For Advanced Relational Database (TypeScript + React + Node.js + Supabase)
 
-A full-stack Database Management System applying **Boyce-Codd Normal Form (BCNF)** from *Topic 1: Advanced Relational Database Design - BCNF* (specifically *The Clinic Database Dilemma*, Slides 14–16).
+A full-stack Database Management System applying **Boyce-Codd Normal Form (BCNF)**
 
 ## Architecture
 
