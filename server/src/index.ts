@@ -1,4 +1,7 @@
 import 'dotenv/config';
+import { existsSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import cors from 'cors';
 import express, { type Request, type Response } from 'express';
 import { getSupabaseClient, getSupabaseConfigStatus } from './db/supabaseClient.js';
@@ -9,6 +12,8 @@ import { simulatorRouter } from './routes/simulator.js';
 const app = express();
 const port = Number(process.env.PORT || 4000);
 const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const clientDistPath = path.resolve(__dirname, '../../client/dist');
 
 app.use(cors({ origin: clientOrigin }));
 app.use(express.json());
@@ -66,6 +71,17 @@ app.get('/api/health', async (_req: Request, res: Response) => {
 app.use('/api/clinic', clinicRouter);
 app.use('/api/simulator', simulatorRouter);
 app.use('/api/bcnf', bcnfRouter);
+
+if (existsSync(clientDistPath)) {
+  app.use(express.static(clientDistPath));
+  app.get('*', (req: Request, res: Response, next) => {
+    if (req.path.startsWith('/api/')) {
+      next();
+      return;
+    }
+    res.sendFile(path.join(clientDistPath, 'index.html'));
+  });
+}
 
 app.listen(port, () => {
   console.log(`Clinic BCNF DBMS API running at http://localhost:${port}`);
